@@ -15,22 +15,23 @@ function DigiTurnos() {
                     <h5><span className="fw-bold">GN:</span> General</h5>
                     <h5><span className="fw-bold">CN:</span> Consignaciones</h5>
                 </div>
-                <Article
-                    asesor='asesor 1'
-                    tipo_asesor='gn-a1'
-                />
-                <Article
-                    asesor='asesor 1'
-                    tipo_asesor='cn'
-                />
-                <Article
-                    asesor='asesor 2    '
-                    tipo_asesor='gn-a2'
-                />
-                <Article
-                    asesor='asesor 2'
-                    tipo_asesor='cn'
-                />
+                
+                <Article 
+                    tipo_turno="G" 
+                    asesor={1} />
+
+                <Article 
+                    tipo_turno="C" 
+                    asesor={1} />
+
+                <Article 
+                    tipo_turno="G" 
+                    asesor={2} />
+
+                <Article 
+                    tipo_turno="C" 
+                    asesor={2} />
+                
             </div>
         </div>
     );
