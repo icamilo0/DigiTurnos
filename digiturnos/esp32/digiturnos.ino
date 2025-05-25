@@ -1,8 +1,9 @@
 #include <WiFi.h>
 #include <WebSocketsServer.h>
+#include <Bounce2.h>
 
 // Credenciales WiFi
-const char* ssid = "SSDI";
+const char* ssid = "SSID";
 const char* password = "PASSWORD";
 
 
