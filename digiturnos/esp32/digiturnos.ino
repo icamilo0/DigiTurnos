@@ -28,14 +28,33 @@ unsigned long buttonPressStartTime[4] = {0, 0, 0, 0}; // para reinicio
 // WebSocket en puerto 81
 WebSocketsServer webSocket = WebSocketsServer(81);
 
+// Objetos Bounce para cada botón
+Bounce debouncerP1 = Bounce();
+Bounce debouncerP2 = Bounce();
+Bounce debouncerP3 = Bounce();
+Bounce debouncerP4 = Bounce();
+
 void setup() {
     Serial.begin(115200);
 
     // Pines
-    pinMode(Ase1_Gn, INPUT);
-    pinMode(Ase1_Cn, INPUT);
-    pinMode(Ase2_Gn, INPUT);
-    pinMode(Ase2_Cn, INPUT);
+    pinMode(Ase1_Gn, INPUT_PULLUP);
+    pinMode(Ase1_Cn, INPUT_PULLUP);
+    pinMode(Ase2_Gn, INPUT_PULLUP);
+    pinMode(Ase2_Cn, INPUT_PULLUP);
+
+  // Asociar cada pin al identificador de rebote - 50 ms ignorando lecturas del pulsado
+    debouncerP1.attach(Ase1_Gn);
+    debouncerP1.interval(50);
+
+    debouncerP2.attach(Ase1_Cn);
+    debouncerP2.interval(50);
+
+    debouncerP3.attach(Ase2_Gn);
+    debouncerP3.interval(50);
+
+    debouncerP4.attach(Ase2_Cn);
+    debouncerP4.interval(50);
 
     // Iniciar conexión WiFi
     setupWiFi();
@@ -48,11 +67,17 @@ void setup() {
 void loop() {
     webSocket.loop();
 
+  // Actualizar estado del identificador de rebote
+    debouncerP1.update();
+    debouncerP2.update();
+    debouncerP3.update();
+    debouncerP4.update();
+
     // Leer estado botones (activo LOW)
-    bool p1 = digitalRead(Ase1_Gn) == HIGH;
-    bool p2 = digitalRead(Ase1_Cn) == HIGH;
-    bool p3 = digitalRead(Ase2_Gn) == HIGH;
-    bool p4 = digitalRead(Ase2_Cn) == HIGH;
+    bool p1 = debouncerP1.read() == LOW;
+    bool p2 = debouncerP2.read() == LOW;
+    bool p3 = debouncerP3.read() == LOW;
+    bool p4 = debouncerP4.read() == LOW;
 
     int pressedCount = p1 + p2 + p3 + p4;
 
@@ -64,7 +89,7 @@ void loop() {
         return;
     }
 
-    // Verificar reinicio (botón presionado 15s)
+    // Verificar reinicio (botón presionado 8s)
     checkResetButton(p1, 0, now);
     checkResetButton(p2, 1, now);
     checkResetButton(p3, 2, now);
@@ -75,23 +100,27 @@ void loop() {
 
     // Emitir turno según botón
     if (p1) {
-        enviarTurno(formatTurno("Gn - A1", contadorGeneral));
+        enviarTurno(formatTurno("Gn - A1", "Asesor 1", contadorGeneral));
         contadorGeneral = (contadorGeneral % limiteGeneral) + 1;
         lastTurnTime = now;
     } else if (p3) {
-        enviarTurno(formatTurno("Gn - A2", contadorGeneral));
+        enviarTurno(formatTurno("Gn - A2", "Asesor 2", contadorGeneral));
         contadorGeneral = (contadorGeneral % limiteGeneral) + 1;
         lastTurnTime = now;
-    } else if (p2 || p4) {
-        enviarTurno(formatTurno("Cn", contadorConsignacion));
+    } else if (p2) {
+        enviarTurno(formatTurno("Cn", "Asesor 1", contadorConsignacion));
+        contadorConsignacion = (contadorConsignacion % limiteConsignacion) + 1;
+        lastTurnTime = now;
+    } else if (p4) {
+        enviarTurno(formatTurno("Cn", "Asesor 2", contadorConsignacion));
         contadorConsignacion = (contadorConsignacion % limiteConsignacion) + 1;
         lastTurnTime = now;
     }
 }
 
 // Función para formatear turnos
-String formatTurno(String tipo, int num) {
-    return tipo + " " + (num < 10 ? "0" : "") + String(num);
+String formatTurno(String tipo, String asesor, int num) {
+    return tipo + " - " + asesor + " - " + (num < 10 ? "0" : "") + String(num);
 }
 
 // Enviar a todos los clientes

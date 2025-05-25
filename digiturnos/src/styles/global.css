@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Yanone+Kaffeesatz:wght@200..700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Yanone+Kaffeesatz:wght@200..700&display=swap");
 
 /* ----------------------- Global Variables ----------------------- */
 
@@ -19,45 +19,45 @@
 
 /* ----------------------- Global Colors ----------------------- */
 
-.color-50 { color: var(--color-50); }
-.color-100 { color: var(--color-100); }
-.color-200 { color: var(--color-200); }
-.color-300 { color: var(--color-300); }
-.color-400 { color: var(--color-400); }
-.color-500 { color: var(--color-500); }
-.color-600 { color: var(--color-600); }
-.color-700 { color: var(--color-700); }
-.color-800 { color: var(--color-800); }
-.color-900 { color: var(--color-900); }
-.color-950 { color: var(--color-950); }
+.color-50 {color: var(--color-50);}
+.color-100 {color: var(--color-100);}
+.color-200 {color: var(--color-200);}
+.color-300 {color: var(--color-300);}
+.color-400 {color: var(--color-400);}
+.color-500 {color: var(--color-500);}
+.color-600 {color: var(--color-600);}
+.color-700 {color: var(--color-700);}
+.color-800 {color: var(--color-800);}
+.color-900 {color: var(--color-900);}
+.color-950 {color: var(--color-950);}
 
-.bg-color-50 { background-color: var(--color-50); }
-.bg-color-100 { background-color: var(--color-100); }
-.bg-color-200 { background-color: var(--color-200); }
-.bg-color-300 { background-color: var(--color-300); }
-.bg-color-400 { background-color: var(--color-400); }
-.bg-color-500 { background-color: var(--color-500); }
-.bg-color-600 { background-color: var(--color-600); }
-.bg-color-700 { background-color: var(--color-700); }
-.bg-color-800 { background-color: var(--color-800); }
-.bg-color-900 { background-color: var(--color-900); }
-.bg-color-950 { background-color: var(--color-950); }
+.bg-color-50 {background-color: var(--color-50);}
+.bg-color-100 {background-color: var(--color-100);}
+.bg-color-200 {background-color: var(--color-200);}
+.bg-color-300 {background-color: var(--color-300);}
+.bg-color-400 {background-color: var(--color-400);}
+.bg-color-500 {background-color: var(--color-500);}
+.bg-color-600 {background-color: var(--color-600);}
+.bg-color-700 {background-color: var(--color-700);}
+.bg-color-800 {background-color: var(--color-800);}
+.bg-color-900 {background-color: var(--color-900);}
+.bg-color-950 {background-color: var(--color-950);}
 
 /* ----------------------- Global Fonts ----------------------- */
 
-.tittle-extra-light { font-family: "Yanone Kaffeesatz", sans-serif; font-optical-sizing: auto; font-weight: 200; font-style: normal; }
-.tittle-light { font-family: "Yanone Kaffeesatz", sans-serif; font-optical-sizing: auto; font-weight: 300; font-style: normal; }
-.tittle-normal { font-family: "Yanone Kaffeesatz", sans-serif; font-optical-sizing: auto; font-weight: 400; font-style: normal; }
-.tittle-medium { font-family: "Yanone Kaffeesatz", sans-serif; font-optical-sizing: auto; font-weight: 500; font-style: normal; }
-.tittle-semi-bold { font-family: "Yanone Kaffeesatz", sans-serif; font-optical-sizing: auto; font-weight: 600; font-style: normal; }
-.tittle-bold { font-family: "Yanone Kaffeesatz", sans-serif; font-optical-sizing: auto; font-weight: 700; font-style: normal; }
+.tittle-extra-light {font-family: "Yanone Kaffeesatz", sans-serif; font-optical-sizing: auto; font-weight: 200; font-style: normal;}
+.tittle-light {font-family: "Yanone Kaffeesatz", sans-serif; font-optical-sizing: auto; font-weight: 300; font-style: normal;}
+.tittle-normal {font-family: "Yanone Kaffeesatz", sans-serif; font-optical-sizing: auto; font-weight: 400; font-style: normal;}
+.tittle-medium {font-family: "Yanone Kaffeesatz", sans-serif; font-optical-sizing: auto; font-weight: 500; font-style: normal;}
+.tittle-semi-bold {font-family: "Yanone Kaffeesatz", sans-serif; font-optical-sizing: auto; font-weight: 600; font-style: normal;}
+.tittle-bold {font-family: "Yanone Kaffeesatz", sans-serif; font-optical-sizing: auto; font-weight: 700; font-style: normal;}
 
-.text-extra-light { font-family: "Nunito", sans-serif; font-optical-sizing: auto; font-weight: 200; font-style: normal; }
-.text-light { font-family: "Nunito", sans-serif; font-optical-sizing: auto; font-weight: 300; font-style: normal; }
-.text-normal { font-family: "Nunito", sans-serif; font-optical-sizing: auto; font-weight: 400; font-style: normal; }
-.text-medium { font-family: "Nunito", sans-serif; font-optical-sizing: auto; font-weight: 500; font-style: normal; }
-.text-semi-bold { font-family: "Nunito", sans-serif; font-optical-sizing: auto; font-weight: 600; font-style: normal; }
-.text-bold { font-family: "Nunito", sans-serif; font-optical-sizing: auto; font-weight: 700; font-style: normal; }
+.text-extra-light {font-family: "Nunito", sans-serif; font-optical-sizing: auto; font-weight: 200; font-style: normal;}
+.text-light {font-family: "Nunito", sans-serif; font-optical-sizing: auto; font-weight: 300; font-style: normal;}
+.text-normal {font-family: "Nunito", sans-serif; font-optical-sizing: auto; font-weight: 400; font-style: normal;}
+.text-medium {font-family: "Nunito", sans-serif; font-optical-sizing: auto; font-weight: 500; font-style: normal;}
+.text-semi-bold {font-family: "Nunito", sans-serif; font-optical-sizing: auto; font-weight: 600; font-style: normal;}
+.text-bold {font-family: "Nunito", sans-serif; font-optical-sizing: auto; font-weight: 700; font-style: normal;}
 
 /* ----------------------- Global Styles ----------------------- */
 
@@ -73,8 +73,7 @@ a:hover {
   cursor: pointer;
 }
 
-
-/* ----------------------- Display 7 Segmentos ----------------------- */
+/* ----------------------- NavBar ----------------------- */
 
 .navbar h1 {
   font-size: 3rem;
@@ -89,27 +88,55 @@ a:hover {
 
 .digit {
   position: relative;
-  width: 70px;
-  height: 90px;
+  width: 150px;
+  height: 170px;
   background-color: var(--color-black);
 }
 
+/* Base de los segmentos */
 .segment {
   position: absolute;
-  background-color: var(--color-950);
-  opacity: 0.7;
+  background-color: var(--color-600);
+  opacity: 0.2;
   transition: opacity 0.2s;
 }
 
 .segment.on {
   opacity: 1;
-  background-color: var(--color-700);
+  background-color: var(--color-600);
 }
 
-.s1 { top: 0; left: 5px; right: 5px; height: 8px; }
-.s2 { top: 5px; right: 0; width: 8px; height: 40px; }
-.s3 { bottom: 5px; right: 0; width: 8px; height: 40px; }
-.s4 { bottom: 0; left: 5px; right: 5px; height: 8px; }
-.s5 { bottom: 5px; left: 0; width: 8px; height: 40px; }
-.s6 { top: 5px; left: 0; width: 8px; height: 40px; }
-.s7 { top: 41px; left: 5px; right: 5px; height: 8px; }
+/* Segmento superior (horizontal) */
+.s1 {
+  top: 0;left: 10px;right: 10px;height: 20px;z-index: 2;
+}
+
+/* Segmento superior derecho (vertical) */
+.s2 {
+  top: 10px;right: 0;width: 20px;height: 80px;z-index: 1;
+}
+
+/* Segmento inferior derecho (vertical) */
+.s3 {
+  bottom: 10px;right: 0;width: 20px;height: 80px;z-index: 1;
+}
+
+/* Segmento inferior (horizontal) */
+.s4 {
+  bottom: 0;left: 10px;right: 10px;height: 20px;z-index: 2;
+}
+
+/* Segmento inferior izquierdo (vertical) */
+.s5 {
+  bottom: 10px;left: 0;width: 20px;height: 80px;z-index: 1;
+}
+
+/* Segmento superior izquierdo (vertical) */
+.s6 {
+  top: 10px;left: 0;width: 20px;height: 80px;z-index: 1;
+}
+
+/* Segmento central (horizontal) */
+.s7 {
+  top: 75px;left: 10px;right: 10px;height: 20px;z-index: 3;
+}
