@@ -2,8 +2,8 @@
 #include <WebSocketsServer.h>
 
 // Credenciales WiFi
-const char* ssid = "FLIA_MERCADO_ARIZA_2.4G";
-const char* password = "26880332";
+const char* ssid = "SSDI";
+const char* password = "PASSWORD";
 
 
 // Pines de botones
