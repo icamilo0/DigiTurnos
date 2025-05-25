@@ -9,7 +9,7 @@ function DigiTurnos() {
     const [turno, setTurno] = useState({
         tipo_turno: "Esperando...",
         asesor: null,
-        numero: 25,
+        numero: null,
     });
 
     useEffect(() => {
