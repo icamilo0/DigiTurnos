@@ -4,7 +4,7 @@ function Navbar({ name_to_page }) {
     return (
         <div className="container-fluid d-flex justify-content-center align-items-center mb-4">
             <nav className="navbar col-9 navbar-expand-lg px-3">
-                <div className="navbar-brand rounded shadow bg-color-400 d-flex justify-content-center align-items-center col-12 p-2">
+                <div className="navbar-brand rounded bg-color-400 d-flex justify-content-center align-items-center col-12 p-2">
                     <h1 className="encabezado text-decoration-none fw-bold color-900 col-11 text-center">{ name_to_page }</h1>
                 </div>
             </nav>

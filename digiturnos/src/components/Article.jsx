@@ -47,13 +47,13 @@ function Article({ tipo_turno, asesor, turno }) {
     }
 
     return (
-        <div className="container-article d-flex flex-column flex-grow-1 col-11 mb-4 p-4">
-            <article className="article d-flex justify-content-between align-items-center">
-                <aside className="col-auto d-flex flex-column justify-content-start align-items-start">
+        <div className="container-article col-11 mb-4 p-4 d-flex justify-content-between">
+            <article className="article col-12 d-flex justify-content-between align-items-center p-0">
+                <aside className="col-9 d-flex flex-column justify-content-start align-items-start">
                     <h5 className="text-uppercase text-bold">{ asesor } </h5>
                     <h1 className="text-uppercase text-semi-bold">{ tipo_turno }</h1>
                 </aside>
-                <div className="col-auto article-info d-flex flex-column justify-content-center align-items-center">
+                <div className="col-3 article-info d-flex flex-column justify-content-center align-items-center">
                     <ContadorSegmentos value={ turno } length={ 2 } />
                 </div>
             </article>

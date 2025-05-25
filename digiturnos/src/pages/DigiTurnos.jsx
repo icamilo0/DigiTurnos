@@ -49,14 +49,15 @@ function DigiTurnos() {
     }, []);
 
     return (
-        <div className="min-vh-100 col-12 bg-color-50 py-3 d-flex flex-column align-items-center">
+        <div className="min-vh-100 col-12 bg-color-50 py-4 d-flex flex-column align-items-center">
             <Navbar name_to_page="DigiTurnos" to_page="/turnos" />
 
-            <div className="col-10 d-flex flex-column justify-content-center align-items-center">
-                <div className="mx-0 mt-0 mb-3 d-flex gap-5">
-                    <h5><span className="fw-bold">GN:</span> General</h5>
-                    <h5><span className="fw-bold">CN:</span> Consignaciones</h5>
-                </div>
+            <div className="col-4 mx-0 mt-0 d-flex justify-content-between align-items-center">
+                <h5><span className="fw-bold">GN:</span> General</h5>
+                <h5><span className="fw-bold">CN:</span> Consignaciones</h5>
+            </div>
+
+            <div className="col-10 d-flex flex-column justify-content-center align-items-center h-100 flex-grow-1">
 
                 <Article
                     tipo_turno={turno.tipo_turno}
