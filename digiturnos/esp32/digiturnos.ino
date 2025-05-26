@@ -14,8 +14,8 @@ const int Ase2_Gn = 4;  // Asesor 2 - General (P3)
 const int Ase2_Cn = 5;  // Asesor 2 - Consignaciones (P4)
 
 // Contadores únicos
-int contadorGeneral = 1;
-int contadorConsignacion = 1;
+int contadorGeneral = 0;
+int contadorConsignacion = 0;
 
 // Límites de rango
 const int limiteGeneral = 30;
@@ -136,8 +136,8 @@ void checkResetButton(bool pressed, int index, unsigned long now) {
         if (buttonPressStartTime[index] == 0) {
             buttonPressStartTime[index] = now;
         } else if (now - buttonPressStartTime[index] >= 8000) {
-            contadorGeneral = 1;
-            contadorConsignacion = 1;
+            contadorGeneral = 0;
+            contadorConsignacion = 0;
             enviarTurno("RESET");
             buttonPressStartTime[index] = 0;
         }
