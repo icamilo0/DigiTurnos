@@ -3,8 +3,8 @@
 #include <Bounce2.h>
 
 // Credenciales WiFi
-const char* ssid = "SSID";
-const char* password = "PASSWORD";
+const char* ssid = "Camilo";
+const char* password = "redmin13";
 
 
 // Pines de botones
@@ -34,6 +34,13 @@ Bounce debouncerP1 = Bounce();
 Bounce debouncerP2 = Bounce();
 Bounce debouncerP3 = Bounce();
 Bounce debouncerP4 = Bounce();
+
+// Prototipos de funciones
+void setupWiFi();
+void onWebSocketEvent(uint8_t client_num, WStype_t type, uint8_t * payload, size_t length);
+void enviarTurno(String msg);
+void checkResetButton(bool pressed, int index, unsigned long now);
+String formatTurno(String tipo, String asesor, int num);
 
 void setup() {
     Serial.begin(115200);

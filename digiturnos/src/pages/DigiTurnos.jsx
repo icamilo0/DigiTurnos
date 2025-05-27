@@ -14,7 +14,7 @@ function DigiTurnos() {
 
     useEffect(() => {
         // IP de prueba
-        const socket = new WebSocket("ws://192.168.1.100:81"); // CAMBIAR LA IP POR LA IP DEL WEBSOCKET
+        const socket = new WebSocket("ws://192.168.167.249:81");
 
         socket.onmessage = (event) => {
             const msg = event.data;
