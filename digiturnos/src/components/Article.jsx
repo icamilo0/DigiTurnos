@@ -50,7 +50,7 @@ function Article({ tipo_turno, asesor, turno }) {
         <div className="container-article col-11 mb-4 p-4 d-flex justify-content-between">
             <article className="article col-12 d-flex justify-content-between align-items-center p-0">
                 <aside className="col-9 d-flex flex-column justify-content-start align-items-start">
-                    <h5 className="text-uppercase text-bold">{ asesor } </h5>
+                    <h5 className="text-uppercase text-bold">Asesor { asesor } </h5>
                     <h1 className="text-uppercase text-semi-bold">{ tipo_turno }</h1>
                 </aside>
                 <div className="col-3 article-info d-flex flex-column justify-content-center align-items-center">

@@ -11,6 +11,7 @@ function DigiTurnos() {
         asesor: null,
         numero: null,
     });
+    const [mensajeError, setMensajeError] = useState("");
 
     useEffect(() => {
         // IP de prueba
@@ -20,8 +21,14 @@ function DigiTurnos() {
             const msg = event.data;
 
             if (msg === "ERROR" || msg === "RESET") {
-                // Aquí puedes manejar mensajes especiales si quieres
+                setMensajeError(
+                    msg === "ERROR"
+                        ? "Ocurrió un error en la comunicación."
+                        : "El sistema fue reiniciado."
+                );
                 return;
+            } else {
+                setMensajeError(""); // Limpia el mensaje si llega uno válido
             }
 
             const regex = /^(Gn - A[12]|Cn) - (Asesor [12]) - (\d{2})$/;
@@ -56,6 +63,13 @@ function DigiTurnos() {
                 <h5><span className="fw-bold">GN:</span> General</h5>
                 <h5><span className="fw-bold">CN:</span> Consignaciones</h5>
             </div>
+
+            {/* Mostrar mensaje de error si existe */}
+            {mensajeError && (
+                <div className="alert alert-warning col-6 text-center my-3">
+                    {mensajeError}
+                </div>
+            )}
 
             <div className="col-10 d-flex flex-column justify-content-center align-items-center h-100 flex-grow-1">
 

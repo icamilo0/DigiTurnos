@@ -42,6 +42,11 @@ void enviarTurno(String msg);
 void checkResetButton(bool pressed, int index, unsigned long now);
 String formatTurno(String tipo, String asesor, int num);
 
+// Variables para testeo automático
+bool modoTest = true; // Cambia a false para volver al modo normal
+unsigned long ultimoEnvioTest = 0;
+int turnoTest = 1;
+
 void setup() {
     Serial.begin(115200);
 
@@ -74,6 +79,30 @@ void setup() {
 
 void loop() {
     webSocket.loop();
+
+    if (modoTest) {
+        unsigned long ahora = millis();
+        if (ahora - ultimoEnvioTest >= 3000) { // Cada 3 segundos
+            // Alterna entre los diferentes tipos de turnos para testear
+            if (turnoTest == 1) {
+                enviarTurno(formatTurno("Gn - A1", "Asesor 1", turnoTest));
+            } else if (turnoTest == 2) {
+                enviarTurno("RESET");
+            } else if (turnoTest == 3) {
+                enviarTurno(formatTurno("Gn - A2", "Asesor 2", turnoTest));
+            } else if (turnoTest == 4) {
+                enviarTurno(formatTurno("Cn", "Asesor 1", turnoTest));
+            } else if (turnoTest == 5) {
+                enviarTurno("ERROR");
+            } else {
+                enviarTurno(formatTurno("Cn", "Asesor 2", turnoTest));
+                turnoTest = 0;
+            }
+            turnoTest++;
+            ultimoEnvioTest = ahora;
+        }
+        return; // Salta la lógica normal de botones
+    }
 
   // Actualizar estado del identificador de rebote
     debouncerP1.update();
