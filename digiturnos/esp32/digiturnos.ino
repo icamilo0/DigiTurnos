@@ -8,10 +8,10 @@ const char* password = "redmin13";
 
 
 // Pines de botones
-const int Ase1_Gn = 18; // Asesor 1 - General (P1)
-const int Ase1_Cn = 2;  // Asesor 1 - Consignaciones (P2)
-const int Ase2_Gn = 14;  // Asesor 2 - General (P3)
-const int Ase2_Cn = 12;  // Asesor 2 - Consignaciones (P4)
+const int Ase1_Gn = 2;   // Asesor 1 - General (D2)
+const int Ase1_Cn = 4;   // Asesor 1 - Consignaciones (D4)
+const int Ase2_Gn = 5;   // Asesor 2 - General (D5)
+const int Ase2_Cn = 18;  // Asesor 2 - Consignaciones (D18)
 
 // Contadores únicos
 int contadorGeneral = 0;
@@ -21,19 +21,22 @@ int contadorConsignacion = 0;
 const int limiteGeneral = 30;
 const int limiteConsignacion = 9;
 
-// Variables para control de tiempo
+// Variables para control de tiempoDe cuanto m
 unsigned long lastTurnTime = 0;
 const unsigned long delayBetweenTurns = 5000; // 5 segundos entre turnos
 unsigned long buttonPressStartTime[4] = {0, 0, 0, 0}; // para reinicio
+unsigned long tiempoInicio = 0;
+const unsigned long tiempoEsperaInicial = 10000; // 10 segundos de espera al inicio
+
 
 // WebSocket en puerto 81
 WebSocketsServer webSocket = WebSocketsServer(81);
 
 // Objetos Bounce para cada botón
-Bounce debouncerP1 = Bounce();
-Bounce debouncerP2 = Bounce();
-Bounce debouncerP3 = Bounce();
-Bounce debouncerP4 = Bounce();
+Bounce debouncerP1 = Bounce(); // Ase1_Gn (D2)
+Bounce debouncerP2 = Bounce(); // Ase1_Cn (D4)
+Bounce debouncerP3 = Bounce(); // Ase2_Gn (D5)
+Bounce debouncerP4 = Bounce(); // Ase2_Cn (D18)
 
 // Prototipos de funciones
 void setupWiFi();
@@ -42,21 +45,17 @@ void enviarTurno(String msg);
 void checkResetButton(bool pressed, int index, unsigned long now);
 String formatTurno(String tipo, String asesor, int num);
 
-// Variables para testeo automático
-bool modoTest = false; // Cambia a false para volver al modo normal
-unsigned long ultimoEnvioTest = 0;
-int turnoTest = 1;
-
 void setup() {
     Serial.begin(115200);
+    tiempoInicio = millis();
 
-    // Pines
+    // Configurar pines con pull-up interno
     pinMode(Ase1_Gn, INPUT_PULLUP);
     pinMode(Ase1_Cn, INPUT_PULLUP);
     pinMode(Ase2_Gn, INPUT_PULLUP);
     pinMode(Ase2_Cn, INPUT_PULLUP);
 
-  // Asociar cada pin al identificador de rebote - 50 ms ignorando lecturas del pulsado
+    // Asociar cada pin al debouncer con intervalo de 100 ms
     debouncerP1.attach(Ase1_Gn);
     debouncerP1.interval(100);
 
@@ -80,85 +79,58 @@ void setup() {
 void loop() {
     webSocket.loop();
 
-    if (modoTest) {
-        unsigned long ahora = millis();
-        if (ahora - ultimoEnvioTest >= 3000) { // Cada 3 segundos
-            // Alterna entre los diferentes tipos de turnos para testear
-            if (turnoTest == 1) {
-                enviarTurno(formatTurno("Gn - A1", "Asesor 1", turnoTest));
-            } else if (turnoTest == 2) {
-                enviarTurno("RESET");
-            } else if (turnoTest == 3) {
-                enviarTurno(formatTurno("Gn - A2", "Asesor 2", turnoTest));
-            } else if (turnoTest == 4) {
-                enviarTurno(formatTurno("Cn", "Asesor 1", turnoTest));
-            } else if (turnoTest == 5) {
-                enviarTurno("ERROR");
-            } else {
-                enviarTurno(formatTurno("Cn", "Asesor 2", turnoTest));
-                turnoTest = 0;
-            }
-            turnoTest++;
-            ultimoEnvioTest = ahora;
-        }
-        return; // Salta la lógica normal de botones
-    }
-
-  // Actualizar estado del identificador de rebote
+    // Actualizar estados debounce
     debouncerP1.update();
     debouncerP2.update();
     debouncerP3.update();
     debouncerP4.update();
 
-    // Leer estado botones (activo LOW)
-    bool p1 = debouncerP1.read() == LOW;
-    bool p2 = debouncerP2.read() == LOW;
-    bool p3 = debouncerP3.read() == LOW;
-    bool p4 = debouncerP4.read() == LOW;
-
-    int pressedCount = p1 + p2 + p3 + p4;
-
-    // Manejo de colisión (error E)
     unsigned long now = millis();
 
+    // Contar cuántos botones están presionados (activo LOW)
+    int pressedCount = (debouncerP1.read() == LOW ? 1 : 0) +
+                      (debouncerP2.read() == LOW ? 1 : 0) +
+                      (debouncerP3.read() == LOW ? 1 : 0) +
+                      (debouncerP4.read() == LOW ? 1 : 0);
+
+    // Manejo de colisión: si hay más de un botón presionado, enviar ERROR
     if (pressedCount > 1) {
         enviarTurno("ERROR");
-        Serial.print("ERROR");
         return;
     }
 
-    // Verificar reinicio (botón presionado 8s)
-    checkResetButton(p1, 0, now);
-    checkResetButton(p2, 1, now);
-    checkResetButton(p3, 2, now);
-    checkResetButton(p4, 3, now);
+    // Ignorar reset durante los primeros 10 segundos
+    if (now - tiempoInicio > tiempoEsperaInicial) {
+        checkResetButton(debouncerP1.read() == LOW, 0, now);
+        checkResetButton(debouncerP2.read() == LOW, 1, now);
+        checkResetButton(debouncerP3.read() == LOW, 2, now);
+        checkResetButton(debouncerP4.read() == LOW, 3, now);
+    } else {
+        // Evitar acumulación del tiempo de pulsación
+        for (int i = 0; i < 4; i++) {
+            buttonPressStartTime[i] = 0;
+        }
+    }
 
     // Evitar emitir turnos seguidos sin esperar 5s
     if (now - lastTurnTime < delayBetweenTurns) return;
 
-    // ...en tu loop, antes de la lógica de turnos
-    Serial.printf("P1:%d P2:%d P3:%d P4:%d\n", p1, p2, p3, p4);
-
-    // Emitir turno según botón
-    if (p1) {
+    // Emitir turno solo en la transición de botón presionado (falling edge)
+    if (debouncerP1.fell()) { // Asesor 1 - General (D2)
         enviarTurno(formatTurno("Gn - A1", "Asesor 1", contadorGeneral));
         contadorGeneral = (contadorGeneral % limiteGeneral) + 1;
-        Serial.print("Gn - A1 | Asesor 1 | Turno: " + contadorGeneral);
         lastTurnTime = now;
-    } else if (p3) {
+    } else if (debouncerP3.fell()) { // Asesor 2 - General (D5)
         enviarTurno(formatTurno("Gn - A2", "Asesor 2", contadorGeneral));
         contadorGeneral = (contadorGeneral % limiteGeneral) + 1;
-        Serial.print("Gn - A2 | Asesor 2 | Turno: " + contadorGeneral);
         lastTurnTime = now;
-    } else if (p2) {
+    } else if (debouncerP2.fell()) { // Asesor 1 - Consignaciones (D4)
         enviarTurno(formatTurno("Cn", "Asesor 1", contadorConsignacion));
         contadorConsignacion = (contadorConsignacion % limiteConsignacion) + 1;
-        Serial.print("Cn | Asesor 1 | Turno: " + contadorConsignacion);
         lastTurnTime = now;
-    } else if (p4) {
+    } else if (debouncerP4.fell()) { // Asesor 2 - Consignaciones (D18)
         enviarTurno(formatTurno("Cn", "Asesor 2", contadorConsignacion));
         contadorConsignacion = (contadorConsignacion % limiteConsignacion) + 1;
-        Serial.print("Cn | Asesor 2 | Turno: " + contadorConsignacion);
         lastTurnTime = now;
     }
 }
@@ -183,7 +155,7 @@ void checkResetButton(bool pressed, int index, unsigned long now) {
             contadorGeneral = 0;
             contadorConsignacion = 0;
             enviarTurno("RESET");
-            Serial.print("RESET");
+            Serial.println("RESET");
             buttonPressStartTime[index] = 0;
         }
     } else {
@@ -212,11 +184,11 @@ void onWebSocketEvent(uint8_t client_num, WStype_t type, uint8_t * payload, size
     switch(type) {
         case WStype_CONNECTED:
             Serial.printf("Cliente %u conectado\n", client_num);
-        break;
+            break;
         case WStype_DISCONNECTED:
             Serial.printf("Cliente %u desconectado\n", client_num);
-        break;
-            default:
-        break;
+            break;
+        default:
+            break;
     }
 }
