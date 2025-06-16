@@ -179,7 +179,7 @@ void setupWiFi() {
     Serial.println(WiFi.localIP().toString());
 }
 
-// Eventos WebSocket
+// Eventos WebSocket (Conexiones externas a traves de la IP)
 void onWebSocketEvent(uint8_t client_num, WStype_t type, uint8_t * payload, size_t length) {
     switch(type) {
         case WStype_CONNECTED:
