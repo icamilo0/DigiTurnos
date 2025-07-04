@@ -89,9 +89,9 @@ void loop() {
 
     // Contar cuántos botones están presionados (activo LOW)
     int pressedCount = (debouncerP1.read() == LOW ? 1 : 0) +
-                      (debouncerP2.read() == LOW ? 1 : 0) +
-                      (debouncerP3.read() == LOW ? 1 : 0) +
-                      (debouncerP4.read() == LOW ? 1 : 0);
+                    (debouncerP2.read() == LOW ? 1 : 0) +
+                    (debouncerP3.read() == LOW ? 1 : 0) +
+                    (debouncerP4.read() == LOW ? 1 : 0);
 
     // Manejo de colisión: si hay más de un botón presionado, enviar ERROR
     if (pressedCount > 1) {

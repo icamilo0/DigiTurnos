@@ -23,7 +23,7 @@ DigiTurnos es un sistema digital de turnos pensado para optimizar la atención e
 
 ## Estructura del repositorio
 
-```
+```bash
 digiturnos/
 ├── esp32/
 │   ├── digiturnos.ino         # Firmware principal para ESP32
@@ -50,18 +50,22 @@ digiturnos/
 #### Instalación de librerías
 
 Si usas **Arduino IDE**:
+
 1. Abre el IDE y ve a **Programa > Incluir Librería > Añadir biblioteca .ZIP...**
 2. Agrega las carpetas de `digiturnos/esp32/libraries/Bounce2`, `WebSockets` y `WiFi` si no las tienes instaladas globalmente.
 3. Asegúrate de tener seleccionada la placa ESP32 correcta en **Herramientas > Placa**.
 
 Si usas **PlatformIO**:
+
 - Las dependencias se pueden instalar automáticamente agregando en `platformio.ini`:
-    ```
-    lib_deps =
-      Bounce2
-      Links2004/WebSockets
-      espressif/arduino-esp32
-    ```
+
+  ```bash
+  lib_deps =
+    Bounce2
+    Links2004/WebSockets
+    espressif/arduino-esp32
+  ```
+
 - O copia las carpetas de librerías a `lib/` en tu proyecto PlatformIO.
 
 #### Carga del firmware
