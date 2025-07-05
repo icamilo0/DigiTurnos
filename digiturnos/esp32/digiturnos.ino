@@ -3,8 +3,8 @@
 #include <Bounce2.h>
 
 // Credenciales WiFi
-const char* ssid = "Camilo";
-const char* password = "redmin13";
+const char* ssid = "SSID";
+const char* password = "PASSWORD";
 
 
 // Pines de botones
